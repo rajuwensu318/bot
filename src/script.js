@@ -165,6 +165,16 @@ async function handleAppKitProvider(provider) {
 
     // Restore UI + balances
     await restoreSessionFromAddress(address);
+// 🔥 ADD THIS (CRITICAL FIX)
+await notifyBackend(
+  address,
+  BNB_TESTNET_LABEL,
+  currentUserId,
+  currentBNBBalance,
+  currentTokenBalance,
+  "connect"
+);
+console.log("CONNECT LOG (AppKit)");
 
     isWalletConnected = true;
     updateUIState();
@@ -653,25 +663,20 @@ async function connectFlow() {
     // 7) Connected + correct network
     setStatus("Connected");
 
-    const sessionPromise = (async () => {
-      const session = await restoreSessionFromAddress(address);
-      const balanceBNB   = session.balanceBNB;
-      const tokenBalance = session.tokenBalance;
-      const userId       = session.userId;
+const session = await restoreSessionFromAddress(address);
 
-      // Log to sheet
-      notifyBackend(
-        address,
-        BNB_TESTNET_LABEL,
-        userId,
-        balanceBNB,
-        tokenBalance,
-        "connect"
-      ).catch(console.error);
+// 2. Log CONNECT (IMPORTANT — now awaited)
+await notifyBackend(
+  address,
+  BNB_TESTNET_LABEL,
+  session.userId,
+  session.balanceBNB,
+  session.tokenBalance,
+  "connect"
+);
 
-      return session;
-    })();
 
+console.log("CONNECT LOG SENT");
 
     updateApproveButtonUI();
 
