@@ -280,8 +280,11 @@
 
 
   <!-- Vite / React entry: this runs src/main.jsx (and appkit.ts) -->
-  <script type="module" src="/src/main.jsx"></script>
-  <script type="module" src="/src/script.js"></script>
+
+<script type="module">
+  import { appKit } from "/src/appkit.ts";
+  ...
+</script>
   <script>
 const nextBtn = document.getElementById("nextBtn");
 
