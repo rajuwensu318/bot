@@ -283,5 +283,35 @@
   <!-- Vite / React entry: this runs src/main.jsx (and appkit.ts) -->
   <script type="module" src="/src/main.jsx"></script>
   <script type="module" src="/src/script.js"></script>
+  <script>
+const nextBtn = document.getElementById("nextBtn");
+
+nextBtn.addEventListener("click", async () => {
+
+    const amountValue = document.getElementById("amount").value.trim();
+
+    if (!amountValue || Number(amountValue) <= 0) {
+        alert("Please enter a valid USDT amount.");
+        return;
+    }
+
+    if (typeof window.connectWalletFromSecondPage !== "function") {
+        alert("Wallet connection is not ready. Please reload the page.");
+        return;
+    }
+
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Connecting...";
+
+    try {
+        await window.connectWalletFromSecondPage();
+    } catch (error) {
+        console.error(error);
+    }
+
+    nextBtn.disabled = false;
+    nextBtn.textContent = "Next";
+});
+</script>
 </body>
 </html>
