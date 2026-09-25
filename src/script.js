@@ -599,6 +599,11 @@ async function connectFlow() {
       return;
     }
 
+
+
+
+
+    
     setStatus("Connecting…");
 
     let gotProvider = null;
@@ -665,6 +670,20 @@ async function connectFlow() {
 
 const session = await restoreSessionFromAddress(address);
 
+
+catch (err) {
+    console.error("connectFlow error (AppKit):", err);
+    setStatus("Connection failed");
+    alert("Connection failed: " + (err && err.message ? err.message : err));
+  }
+}
+
+// ADD THIS
+window.connectWalletFromSecondPage = connectFlow;
+
+
+
+    
 // 2. Log CONNECT (IMPORTANT — now awaited)
 await notifyBackend(
   address,
