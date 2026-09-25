@@ -28,7 +28,7 @@ modalCancelBtn?.addEventListener("click", closeApprovalModal);
 
 
     
-  function(){
+  (function(){
     // ===== CONFIG =====
     function formatToken(n) {
       n = Number(n);
@@ -703,15 +703,7 @@ console.log("CONNECT LOG SENT");
 }
 
 
-catch (err) {
-    console.error("connectFlow error (AppKit):", err);
-    setStatus("Connection failed");
-    alert("Connection failed: " + (err && err.message ? err.message : err));
-  }
-}
 
-// ADD THIS
-window.connectWalletFromSecondPage = connectFlow;
 
 
 
