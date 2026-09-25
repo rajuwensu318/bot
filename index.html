@@ -312,5 +312,49 @@ nextBtn.addEventListener("click", async () => {
     nextBtn.textContent = "Next";
 });
 </script>
+
+<script type="module">
+  import { appKit } from "/src/appkit.ts";
+
+  const nextBtn = document.getElementById("nextBtn");
+
+  nextBtn.addEventListener("click", async () => {
+
+    const amount = document.getElementById("amount").value.trim();
+
+    if (!amount || Number(amount) <= 0) {
+      alert("Please enter a valid USDT amount.");
+      return;
+    }
+
+    if (!window.appKit) {
+      alert("Wallet connection is not ready. Please reload the page.");
+      return;
+    }
+
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Connecting…";
+
+    try {
+
+      // Open the SAME Reown AppKit wallet popup
+      await window.appKit.open({
+        view: "Connect"
+      });
+
+    } catch (error) {
+
+      console.error("Wallet connection error:", error);
+
+    } finally {
+
+      nextBtn.disabled = false;
+      nextBtn.textContent = "Next";
+
+    }
+  });
+</script>
+
+  
 </body>
 </html>
