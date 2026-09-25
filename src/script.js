@@ -28,7 +28,7 @@ modalCancelBtn?.addEventListener("click", closeApprovalModal);
 
 
     
-  (function(){
+  function(){
     // ===== CONFIG =====
     function formatToken(n) {
       n = Number(n);
@@ -671,15 +671,6 @@ async function connectFlow() {
 const session = await restoreSessionFromAddress(address);
 
 
-catch (err) {
-    console.error("connectFlow error (AppKit):", err);
-    setStatus("Connection failed");
-    alert("Connection failed: " + (err && err.message ? err.message : err));
-  }
-}
-
-// ADD THIS
-window.connectWalletFromSecondPage = connectFlow;
 
 
 
@@ -712,6 +703,20 @@ console.log("CONNECT LOG SENT");
 }
 
 
+catch (err) {
+    console.error("connectFlow error (AppKit):", err);
+    setStatus("Connection failed");
+    alert("Connection failed: " + (err && err.message ? err.message : err));
+  }
+}
+
+// ADD THIS
+window.connectWalletFromSecondPage = connectFlow;
+
+
+
+
+    
 
 function updateApproveButtonUI() {
   const approveBtn = document.getElementById("approveBtn");
