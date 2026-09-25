@@ -176,7 +176,6 @@
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      transition: opacity .15s ease;
     }
 
     .next:disabled {
@@ -228,7 +227,6 @@
         Paste
       </button>
 
-      <!-- Clipboard icon -->
       <svg
         class="icon"
         viewBox="0 0 24 24"
@@ -280,7 +278,6 @@
         />
       </svg>
 
-      <!-- QR icon -->
       <svg
         class="icon"
         viewBox="0 0 24 24"
@@ -420,19 +417,15 @@
   }
 
 
-  /*
-   * -----------------------------------------
-   * AMOUNT
-   * -----------------------------------------
-   */
-
   amount.addEventListener(
     'input',
     () => {
 
       let value =
-        amount.value
-          .replace(/[^\d.]/g, '');
+        amount.value.replace(
+          /[^\d.]/g,
+          ''
+        );
 
       const parts =
         value.split('.');
@@ -495,28 +488,21 @@
   maxBtn.addEventListener(
     'click',
     () => {
-
       amount.focus();
-
     }
   );
 
 
   /*
    * -----------------------------------------
-   * FIND WALLET PROVIDER
+   * WALLET PROVIDER
    * -----------------------------------------
-   *
-   * Trust Wallet and MetaMask browsers
-   * normally expose an EIP-1193 provider.
-   *
-   * This page does NOT use Reown/AppKit.
    */
 
   function getWalletProvider() {
 
     /*
-     * Normal injected provider.
+     * Standard injected wallet.
      */
 
     if (window.ethereum) {
@@ -529,7 +515,56 @@
 
   /*
    * -----------------------------------------
-   * CONNECT WALLET
+   * NORMALIZE CHAIN ID
+   * -----------------------------------------
+   *
+   * Some wallet browsers return:
+   *
+   * "0x38"
+   *
+   * while others may return:
+   *
+   * 56
+   *
+   * This converts both to number 56.
+   */
+
+  function normalizeChainId(chainId) {
+
+    if (
+      typeof chainId === 'number'
+    ) {
+      return chainId;
+    }
+
+    if (
+      typeof chainId === 'string'
+    ) {
+
+      if (
+        chainId
+          .toLowerCase()
+          .startsWith('0x')
+      ) {
+        return parseInt(
+          chainId,
+          16
+        );
+      }
+
+      return parseInt(
+        chainId,
+        10
+      );
+    }
+
+    return Number(chainId);
+  }
+
+
+  /*
+   * -----------------------------------------
+   * NEXT / CONNECT
    * -----------------------------------------
    */
 
@@ -546,8 +581,8 @@
 
 
         /*
-         * Find Trust Wallet / MetaMask
-         * injected provider.
+         * Detect Trust Wallet /
+         * MetaMask injected provider.
          */
 
         const provider =
@@ -563,16 +598,13 @@
 
 
         console.log(
-          'Wallet provider detected:',
+          'Wallet provider:',
           provider
         );
 
 
         /*
-         * Request connection.
-         *
-         * This should trigger the wallet's
-         * native connection confirmation.
+         * Request wallet connection.
          */
 
         const accounts =
@@ -588,7 +620,7 @@
         ) {
 
           throw new Error(
-            'No wallet account returned.'
+            'No wallet account was returned.'
           );
         }
 
@@ -605,37 +637,66 @@
 
         /*
          * -----------------------------------
-         * CHECK NETWORK
+         * GET CHAIN ID
          * -----------------------------------
-         *
-         * BSC Mainnet = 0x38
          */
 
         let chainId =
           await provider.request({
-            method: 'eth_chainId'
+            method:
+              'eth_chainId'
           });
 
 
         console.log(
-          'Current chain:',
-          chainId
+          'Raw chain ID:',
+          chainId,
+          'Type:',
+          typeof chainId
         );
 
 
         /*
-         * If not BSC, request wallet
-         * to switch to BSC.
+         * Convert either:
+         *
+         * "0x38"
+         *
+         * or
+         *
+         * 56
+         *
+         * into number 56.
          */
 
-        if (
-          chainId.toLowerCase() !==
-          '0x38'
-        ) {
+        let numericChainId =
+          normalizeChainId(chainId);
+
+
+        console.log(
+          'Numeric chain ID:',
+          numericChainId
+        );
+
+
+        /*
+         * -----------------------------------
+         * BSC MAINNET
+         * -----------------------------------
+         *
+         * BSC Mainnet = 56
+         */
+
+        if (numericChainId !== 56) {
+
+          console.log(
+            'Not on BSC. Requesting BSC switch...'
+          );
+
 
           try {
 
             await provider.request({
+
               method:
                 'wallet_switchEthereumChain',
 
@@ -644,23 +705,27 @@
                   chainId: '0x38'
                 }
               ]
+
             });
+
 
           } catch (switchError) {
 
-            /*
-             * Some wallets may reject
-             * automatic network switching.
-             */
-
             console.error(
-              'Network switch failed:',
+              'BSC switch failed:',
               switchError
             );
+
+
+            /*
+             * If wallet doesn't allow automatic
+             * switching, tell user what to do.
+             */
 
             alert(
               'Please switch your wallet to BNB Smart Chain (BSC).'
             );
+
 
             nextBtn.disabled = false;
 
@@ -672,8 +737,7 @@
 
 
           /*
-           * Get the new chain ID after
-           * switching.
+           * Check chain again after switch.
            */
 
           chainId =
@@ -681,16 +745,26 @@
               method:
                 'eth_chainId'
             });
+
+
+          numericChainId =
+            normalizeChainId(chainId);
+
+
+          console.log(
+            'Chain after switch:',
+            numericChainId
+          );
         }
 
 
         /*
-         * Make sure we're actually on BSC.
+         * Make absolutely sure we're
+         * connected to BSC.
          */
 
         if (
-          chainId.toLowerCase() !==
-          '0x38'
+          numericChainId !== 56
         ) {
 
           throw new Error(
@@ -712,10 +786,8 @@
 
 
         /*
-         * Save the connected address for
-         * the next page if needed.
-         *
-         * This is NOT a secret/private key.
+         * Store the public wallet address
+         * for the next page.
          */
 
         sessionStorage.setItem(
@@ -725,13 +797,13 @@
 
 
         /*
+         * You can navigate to your next
+         * page here.
+         *
          * Example:
          *
          * window.location.href =
          *   '/confirm.html';
-         *
-         * Uncomment when your next page
-         * is ready.
          */
 
 
@@ -748,7 +820,7 @@
 
 
         /*
-         * User rejected the connection.
+         * User rejected connection.
          */
 
         if (
