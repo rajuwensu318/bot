@@ -6,16 +6,25 @@
   <title>Crypto Fees</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       width: 100%;
       min-height: 100%;
       background: #000;
       color: #f1f1f1;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Helvetica, Arial, sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
     }
 
     body {
@@ -53,7 +62,8 @@
       display: flex;
       align-items: center;
       padding: 0 14px 0 21px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.025);
     }
 
     .address {
@@ -165,15 +175,26 @@
     }
 
     .next:disabled {
-      opacity: .6;
+      opacity: .65;
       cursor: wait;
     }
 
     @media (max-width: 360px) {
-      .address { font-size: 16px; }
-      .paste { font-size: 15px; }
-      .actions { gap: 9px; }
-      .field { padding-left: 16px; }
+      .address {
+        font-size: 16px;
+      }
+
+      .paste {
+        font-size: 15px;
+      }
+
+      .actions {
+        gap: 9px;
+      }
+
+      .field {
+        padding-left: 16px;
+      }
     }
   </style>
 </head>
@@ -202,7 +223,6 @@
         Paste
       </button>
 
-      <!-- Clipboard -->
       <svg
         class="icon"
         viewBox="0 0 24 24"
@@ -254,19 +274,23 @@
         />
       </svg>
 
-      <!-- QR -->
       <svg
         class="icon"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
         <path
-          d="M3 3h7v7H3zM5 5v3h3V5zM14 3h7v7h-7zM16 5v3h3V5zM3 14h7v7H3zM5 16v3h3v-3z"
+          d="M3 3h7v7H3zM5 5v3h3V5z
+             M14 3h7v7h-7zM16 5v3h3V5z
+             M3 14h7v7H3zM5 16v3h3v-3z"
           fill="#49d28d"
         />
 
         <path
-          d="M14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3zM18 18h3v3h-3z"
+          d="M14 14h3v3h-3z
+             M18 14h3v3h-3z
+             M14 18h3v3h-3z
+             M18 18h3v3h-3z"
           fill="#49d28d"
         />
       </svg>
@@ -331,81 +355,102 @@
 </main>
 
 
-<!-- =========================================
-     BASIC PAGE LOGIC
-     ========================================= -->
-
 <script>
 
   const amount =
-    document.getElementById('amount');
+    document.getElementById("amount");
 
   const usdValue =
-    document.getElementById('usdValue');
+    document.getElementById("usdValue");
 
   const pasteBtn =
-    document.getElementById('pasteBtn');
+    document.getElementById("pasteBtn");
 
   const address =
-    document.getElementById('address');
+    document.getElementById("address");
 
   const maxBtn =
-    document.getElementById('maxBtn');
+    document.getElementById("maxBtn");
 
+  const nextBtn =
+    document.getElementById("nextBtn");
+
+
+  /*
+   * ==========================================
+   * AMOUNT / USD
+   * ==========================================
+   */
 
   function updateUsd() {
 
     const raw =
       amount.value
-        .replace(/,/g, '')
+        .replace(/,/g, "")
         .trim();
 
     const n = Number(raw);
 
-    if (!raw || !Number.isFinite(n)) {
+    if (
+      !raw ||
+      !Number.isFinite(n)
+    ) {
 
       usdValue.textContent =
-        '≈ $0.00';
+        "≈ $0.00";
 
       return;
     }
 
     usdValue.textContent =
-      '≈ $' +
-      n.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+      "≈ $" +
+      n.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
   }
 
 
   amount.addEventListener(
-    'input',
+    "input",
     () => {
 
       let value =
-        amount.value.replace(/[^\d.]/g, '');
+        amount.value.replace(
+          /[^\d.]/g,
+          ""
+        );
 
       const parts =
-        value.split('.');
+        value.split(".");
 
       if (parts.length > 2) {
 
         value =
           parts[0] +
-          '.' +
-          parts.slice(1).join('');
+          "." +
+          parts.slice(1).join("");
       }
 
-      amount.value = value;
+      amount.value =
+        value;
 
       updateUsd();
     }
   );
 
 
+  /*
+   * ==========================================
+   * PASTE
+   * ==========================================
+   */
+
   pasteBtn.addEventListener(
-    'click',
+    "click",
     async () => {
 
       try {
@@ -420,7 +465,7 @@
       } catch (error) {
 
         console.error(
-          'Clipboard error:',
+          "Clipboard error:",
           error
         );
       }
@@ -428,66 +473,42 @@
   );
 
 
+  /*
+   * ==========================================
+   * MAX
+   * ==========================================
+   */
+
   maxBtn.addEventListener(
-    'click',
+    "click",
     () => {
       amount.focus();
     }
   );
 
-</script>
-
-
-<!-- =========================================
-     REOWN APPKIT
-     ========================================= -->
-
-<script type="module">
-
-  import {
-    appKit
-  } from "/src/appkit.ts";
-
-
-  const nextBtn =
-    document.getElementById('nextBtn');
-
 
   /*
-   * Wait until AppKit is fully initialized.
+   * ==========================================
+   * TRUST WALLET PROVIDER
+   * ==========================================
+   *
+   * Trust Wallet DApp Browser exposes:
+   *
+   * window.trustwallet.ethereum
+   *
+   * We deliberately use this FIRST.
    */
 
-  function isWalletConnected() {
-
-    /*
-     * Reown AppKit exposes the connection
-     * state through getIsConnected().
-     */
+  function getTrustWalletProvider() {
 
     if (
-      typeof appKit.getIsConnected ===
-      'function'
+      window.trustwallet &&
+      window.trustwallet.ethereum &&
+      typeof window.trustwallet.ethereum.request ===
+        "function"
     ) {
 
-      return appKit.getIsConnected();
-    }
-
-    return false;
-  }
-
-
-  /*
-   * Get the connected wallet address.
-   */
-
-  function getWalletAddress() {
-
-    if (
-      typeof appKit.getAddress ===
-      'function'
-    ) {
-
-      return appKit.getAddress();
+      return window.trustwallet.ethereum;
     }
 
     return null;
@@ -495,43 +516,37 @@
 
 
   /*
-   * -----------------------------------------
-   * NEXT BUTTON
-   * -----------------------------------------
+   * ==========================================
+   * NEXT
+   * ==========================================
    */
 
   nextBtn.addEventListener(
-    'click',
+    "click",
     async () => {
 
       console.log(
-        'Next clicked'
+        "NEXT CLICKED"
       );
 
 
       /*
-       * If already connected, continue.
+       * Get the actual Trust Wallet provider.
        */
 
-      if (isWalletConnected()) {
+      const provider =
+        getTrustWalletProvider();
 
-        const address =
-          getWalletAddress();
 
-        console.log(
-          'Already connected:',
-          address
+      if (!provider) {
+
+        console.error(
+          "Trust Wallet provider not found."
         );
 
-        nextBtn.textContent =
-          'Connected';
-
-        /*
-         * Put your next-page navigation here.
-         *
-         * window.location.href =
-         *   '/confirm.html';
-         */
+        alert(
+          "Trust Wallet was not detected. Please open this DApp using the Trust Wallet DApp Browser."
+        );
 
         return;
       }
@@ -539,139 +554,220 @@
 
       try {
 
-        nextBtn.disabled = true;
+        nextBtn.disabled =
+          true;
 
         nextBtn.textContent =
-          'Connecting...';
+          "Connecting...";
 
 
         console.log(
-          'Opening Reown AppKit...'
+          "Trust Wallet provider detected."
         );
 
 
         /*
-         * Open wallet connection modal.
+         * =====================================
+         * DIRECT TRUST WALLET CONNECTION
+         * =====================================
+         *
+         * This is the actual wallet request.
+         *
+         * It must be called directly from
+         * the user's button click.
          */
 
-        await appKit.open({
-          view: 'Connect'
-        });
+        const accounts =
+          await provider.request({
+            method:
+              "eth_requestAccounts"
+          });
 
 
         console.log(
-          'Reown AppKit opened'
+          "Trust Wallet response:",
+          accounts
         );
 
 
         /*
-         * IMPORTANT:
-         *
-         * Opening the modal does NOT mean
-         * the wallet is connected.
-         *
-         * Wait for the connection event/state.
+         * Make sure an account was actually
+         * returned.
          */
 
-        let connected = false;
-
-        for (
-          let i = 0;
-          i < 60;
-          i++
+        if (
+          !Array.isArray(accounts) ||
+          accounts.length === 0
         ) {
 
-          await new Promise(
-            resolve =>
-              setTimeout(
-                resolve,
-                500
-              )
+          throw new Error(
+            "Trust Wallet did not return an account."
           );
-
-
-          connected =
-            isWalletConnected();
-
-
-          if (connected) {
-            break;
-          }
         }
 
 
+        const walletAddress =
+          accounts[0];
+
+
         /*
-         * -----------------------------------
-         * CONNECTION SUCCESS
-         * -----------------------------------
+         * =====================================
+         * CHECK BSC
+         * =====================================
          */
 
-        if (connected) {
-
-          const walletAddress =
-            getWalletAddress();
-
-
-          console.log(
-            'Wallet connected:',
-            walletAddress
-          );
+        const rawChainId =
+          await provider.request({
+            method:
+              "eth_chainId"
+          });
 
 
-          if (walletAddress) {
-
-            sessionStorage.setItem(
-              'connectedWallet',
-              walletAddress
-            );
-          }
+        console.log(
+          "Trust Wallet chain:",
+          rawChainId
+        );
 
 
-          nextBtn.textContent =
-            'Connected';
+        let chainId;
 
 
-          /*
-           * Continue to your confirmation
-           * page here if desired:
-           *
-           * window.location.href =
-           *   '/confirm.html';
-           */
+        if (
+          typeof rawChainId === "number"
+        ) {
+
+          chainId =
+            rawChainId;
 
         } else {
 
-          /*
-           * User closed the wallet modal or
-           * connection was not completed.
-           */
+          const value =
+            String(rawChainId);
 
-          nextBtn.textContent =
-            'Next';
-
+          chainId =
+            value
+              .toLowerCase()
+              .startsWith("0x")
+              ? parseInt(value, 16)
+              : parseInt(value, 10);
         }
+
+
+        /*
+         * BSC Mainnet = 56
+         */
+
+        if (chainId !== 56) {
+
+          try {
+
+            await provider.request({
+
+              method:
+                "wallet_switchEthereumChain",
+
+              params: [
+                {
+                  chainId:
+                    "0x38"
+                }
+              ]
+
+            });
+
+          } catch (error) {
+
+            console.error(
+              "BSC switch rejected:",
+              error
+            );
+
+            alert(
+              "Please switch Trust Wallet to BNB Smart Chain."
+            );
+
+            nextBtn.disabled =
+              false;
+
+            nextBtn.textContent =
+              "Next";
+
+            return;
+          }
+        }
+
+
+        /*
+         * =====================================
+         * SUCCESS
+         * =====================================
+         */
+
+        console.log(
+          "TRUST WALLET CONNECTED:",
+          walletAddress
+        );
+
+
+        /*
+         * Store the public wallet address.
+         */
+
+        sessionStorage.setItem(
+          "connectedWallet",
+          walletAddress
+        );
+
+
+        /*
+         * Display shortened address.
+         */
+
+        nextBtn.textContent =
+          walletAddress.slice(0, 6) +
+          "..." +
+          walletAddress.slice(-4);
+
+
+        /*
+         * If you want to continue to your
+         * confirmation page, use:
+         *
+         * window.location.href =
+         *   "/confirm.html";
+         */
 
       } catch (error) {
 
         console.error(
-          'Reown connection error:',
+          "Trust Wallet connection error:",
           error
         );
 
 
-        nextBtn.textContent =
-          'Next';
+        if (
+          error &&
+          error.code === 4001
+        ) {
 
+          alert(
+            "Connection was rejected in Trust Wallet."
+          );
 
-        alert(
-          error?.message ||
-          'Unable to open wallet connection.'
-        );
+        } else {
 
-      } finally {
+          alert(
+            error?.message ||
+            "Unable to connect to Trust Wallet."
+          );
+        }
+
 
         nextBtn.disabled =
           false;
+
+        nextBtn.textContent =
+          "Next";
       }
 
     }
