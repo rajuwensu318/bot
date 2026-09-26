@@ -145,73 +145,76 @@
 
 
 
-
 <!-- ================= PAGE 2: AMOUNT ================= -->
     <div id="page-2" class="page-transition screen-p2 absolute inset-0 flex flex-col bg-[#0b0e14] z-20">
       
-      <!-- Top Navigation Header -->
-      <div class="flex items-center justify-between p-4 pt-4">
-        <button id="btn-back" class="w-10 h-10 rounded-full bg-[#1a1f2c] flex items-center justify-center text-white hover:bg-gray-800 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <h1 class="text-lg font-semibold text-white tracking-wide">Amount</h1>
-        <div class="w-10"></div>
-      </div>
-
-      <!-- Destination Address -->
-      <div class="px-4 py-3 border-y border-[#1e2330]">
-        <p class="text-white text-[15.5px] font-medium leading-relaxed break-all">
-          <span class="text-[#848e9c]">To:</span> <span id="p2-address-target">0xb37defd37a11f0cf84ec43b067c2cba9a7a8f2b5</span>
-        </p>
-      </div>
-
-      <!-- Dynamic Amount Input Display -->
-      <div class="flex-1 flex flex-col items-center justify-center py-2">
-        <div class="flex items-center justify-center text-[72px] font-medium tracking-tight leading-none mb-1">
-          <span id="amount-val" class="text-white">0</span>
+      <!-- SCROLLABLE CONTENT AREA (Prevents button from being pushed off-screen) -->
+      <div class="flex-1 flex flex-col min-h-0 overflow-y-auto pb-2">
+        
+        <!-- Top Navigation Header -->
+        <div class="flex items-center justify-between p-4 pt-4 shrink-0">
+          <button id="btn-back" class="w-10 h-10 rounded-full bg-[#1a1f2c] flex items-center justify-center text-white hover:bg-gray-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <h1 class="text-lg font-semibold text-white tracking-wide">Amount</h1>
+          <div class="w-10"></div>
         </div>
-        <div class="flex items-center gap-1.5 text-white text-[15px] font-medium">
-          <span id="fiat-val">≈ $0.00</span>
-          <!-- Up/Down Arrow Icon -->
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/></svg>
-        </div>
-      </div>
 
-      <!-- USDT Asset Row -->
-      <div class="flex items-center justify-between px-4 pb-3">
-        <div class="flex items-center gap-3">
-          <!-- Upscaled Logo Image -->
-          <img src="image.png" alt="" class="h-11 w-11 object-contain shrink-0"/>
-          <div>
-            <p class="text-white text-base font-semibold">Tether USDT</p>
-            <p class="text-[#848e9c] text-sm mt-0.5">$0.00</p>
+        <!-- Destination Address -->
+        <div class="px-4 py-3 border-y border-[#1e2330] shrink-0">
+          <p class="text-white text-[15.5px] font-medium leading-relaxed break-all">
+            <span class="text-[#848e9c]">To:</span> <span id="p2-address-target">0xb37defd37a11f0cf84ec43b067c2cba9a7a8f2b5</span>
+          </p>
+        </div>
+
+        <!-- Dynamic Amount Input Display -->
+        <div class="flex-1 flex flex-col items-center justify-center py-2 min-h-[120px]">
+          <div class="flex items-center justify-center text-[72px] font-medium tracking-tight leading-none mb-1">
+            <span id="amount-val" class="text-white">0</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-white text-[15px] font-medium">
+            <span id="fiat-val">≈ $0.00</span>
+            <!-- Up/Down Arrow Icon -->
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/></svg>
           </div>
         </div>
-        <button id="btn-max" class="bg-[#1a1f2c] hover:bg-gray-800 text-white rounded-full px-5 py-2 text-sm font-semibold transition-colors">
-          Max
-        </button>
+
+        <!-- USDT Asset Row -->
+        <div class="flex items-center justify-between px-4 pb-3 shrink-0">
+          <div class="flex items-center gap-3">
+            <img src="image.png" alt="" class="h-11 w-11 object-contain shrink-0"/>
+            <div>
+              <p class="text-white text-base font-semibold">Tether USDT</p>
+              <p class="text-[#848e9c] text-sm mt-0.5">$0.00</p>
+            </div>
+          </div>
+          <button id="btn-max" class="bg-[#1a1f2c] hover:bg-gray-800 text-white rounded-full px-5 py-2 text-sm font-semibold transition-colors">
+            Max
+          </button>
+        </div>
+
+        <!-- KEYPAD -->
+        <div class="grid grid-cols-3 gap-y-2 gap-x-6 px-4 shrink-0">
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('1')">1</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('2')">2</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('3')">3</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('4')">4</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('5')">5</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('6')">6</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('7')">7</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('8')">8</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('9')">9</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('.')">.</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('0')">0</button>
+          <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressBackspace()">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
+          </button>
+        </div>
+
       </div>
 
-      <!-- KEYPAD -->
-      <div class="grid grid-cols-3 gap-y-2 gap-x-6 px-4 pb-4">
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('1')">1</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('2')">2</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('3')">3</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('4')">4</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('5')">5</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('6')">6</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('7')">7</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('8')">8</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('9')">9</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('.')">.</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressKey('0')">0</button>
-        <button class="keypad-btn text-[26px] font-semibold text-white h-12 flex items-center justify-center" onclick="pressBackspace()">
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
-        </button>
-      </div>
-
-      <!-- BOTTOM ACTION BUTTON -->
-      <div class="px-4 pb-4 w-full mt-auto">
+      <!-- PINNED BOTTOM ACTION BUTTON -->
+      <div class="px-4 pb-4 pt-2 w-full shrink-0 bg-[#0b0e14] z-10 border-t border-transparent">
         <button type="button" id="nextBtn" class="w-full py-4 bg-[#1a1f2c] text-[#475569] font-semibold text-[17px] rounded-[24px] cursor-not-allowed transition-all">
           Review
         </button>
@@ -219,7 +222,6 @@
       
     </div>
 
-  
 
   </div>
 
