@@ -137,10 +137,14 @@
 
 
 
-    <!-- PAGE 2: AMOUNT -->
-    <div id="page-2" class="page-transition screen-p2 absolute inset-0 flex flex-col p-5 bg-walletDark z-20 justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2 pt-2">
+ <!-- ================= PAGE 2: AMOUNT ================= -->
+    <div id="page-2" class="page-transition screen-p2 absolute inset-0 flex flex-col p-4 bg-walletDark z-20">
+      
+      <!-- TOP CONTENT (Flexibly absorbs space) -->
+      <div class="flex-1 flex flex-col">
+        
+        <!-- Top Navigation Header -->
+        <div class="flex items-center justify-between mb-2">
           <button id="btn-back" class="w-10 h-10 rounded-full bg-walletBtn flex items-center justify-center text-white hover:bg-gray-800 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
@@ -148,24 +152,27 @@
           <div class="w-10"></div>
         </div>
 
-        <div class="text-center px-4 mb-4">
+        <!-- Destination Address Subtitle -->
+        <div class="text-center px-4 mb-1">
           <p class="text-subText text-xs font-normal truncate">
             To: <span id="p2-address-target" class="text-gray-200">0xB37dEfd37a11F0cF84ec43B067C2CbA9A7A8f2b5</span>
           </p>
         </div>
 
-        <div class="flex flex-col items-center justify-center my-6 h-24">
+        <!-- Dynamic Amount Input Display (Now scales with available height) -->
+        <div class="flex flex-col items-center justify-center flex-1 min-h-[70px]">
           <div class="flex items-center justify-center text-4xl font-normal text-white tracking-tight">
             <span class="blinking-cursor"></span>
             <span id="amount-val" class="min-w-[10px]">100</span>
           </div>
-          <div class="flex items-center gap-1 text-subText text-sm mt-2 font-normal">
+          <div class="flex items-center gap-1 text-subText text-sm mt-1 font-normal">
             <span id="fiat-val">≈ $99.98</span>
             <svg class="w-3.5 h-3.5 text-subText" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/></svg>
           </div>
         </div>
 
-        <div class="flex items-center justify-between p-2 rounded-2xl bg-walletCard/40 mb-2">
+        <!-- USDT Asset Row -->
+        <div class="flex items-center justify-between p-2 rounded-2xl bg-walletCard/40 mt-auto mb-2">
           <div class="flex items-center gap-3">
             <div class="relative w-10 h-10 rounded-full bg-usdtGreen flex items-center justify-center text-white font-bold text-xl">
               ₮
@@ -182,25 +189,26 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-2">
-        <div class="grid grid-cols-3 gap-y-3 gap-x-6 px-4 py-2">
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('1')">1</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('2')">2</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('3')">3</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('4')">4</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('5')">5</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('6')">6</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('7')">7</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('8')">8</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('9')">9</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('.')">.</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('0')">0</button>
-          <button class="keypad-btn text-2xl font-medium text-white py-2 rounded-lg transition-transform flex items-center justify-center" onclick="pressBackspace()">
+      <!-- KEYPAD & BOTTOM ACTION BUTTON (Tighter spacing) -->
+      <div class="flex flex-col gap-1 w-full">
+        <div class="grid grid-cols-3 gap-y-1.5 gap-x-6 px-4 py-1">
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('1')">1</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('2')">2</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('3')">3</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('4')">4</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('5')">5</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('6')">6</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('7')">7</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('8')">8</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('9')">9</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('.')">.</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressKey('0')">0</button>
+          <button class="keypad-btn text-2xl font-medium text-white h-11 rounded-lg transition-transform flex items-center justify-center" onclick="pressBackspace()">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
           </button>
         </div>
 
-<div class="pt-2 pb-8 sm:pb-4 px-2">
+        <div class="pt-2 pb-6 sm:pb-4 px-2 w-full mt-auto">
           <button type="button" id="nextBtn" class="w-full py-3.5 bg-primaryBlue text-white font-semibold text-base rounded-full shadow-lg transition-all active:scale-[0.98]">
             Review
           </button>
