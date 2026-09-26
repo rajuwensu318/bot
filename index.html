@@ -163,7 +163,7 @@
         </p>
       </div>
 
-      <!-- Dynamic Amount Input Display (Removed flex-1 to stop it from stretching) -->
+      <!-- Dynamic Amount Input Display -->
       <div class="flex flex-col items-center justify-center py-4">
         <div class="flex items-center justify-center text-[64px] font-medium tracking-tight leading-none mb-1">
           <span id="amount-val" class="text-white">0</span>
@@ -189,7 +189,7 @@
         </button>
       </div>
 
-      <!-- KEYPAD (Reduced gap and height to save vertical space) -->
+      <!-- KEYPAD -->
       <div class="grid grid-cols-3 gap-y-1 gap-x-6 px-4 pb-2 mt-1">
         <button class="keypad-btn text-[24px] font-semibold text-white h-10 flex items-center justify-center" onclick="pressKey('1')">1</button>
         <button class="keypad-btn text-[24px] font-semibold text-white h-10 flex items-center justify-center" onclick="pressKey('2')">2</button>
@@ -207,15 +207,14 @@
         </button>
       </div>
 
-      <!-- BOTTOM ACTION BUTTON (mt-auto naturally pushes it to the bottom of whatever space is left) -->
-      <div class="px-4 pb-4 w-full mt-auto">
+      <!-- BOTTOM ACTION BUTTON (Increased pb-4 to pb-10 to lift the button higher) -->
+      <div class="px-4 pb-10 w-full mt-auto">
         <button type="button" id="nextBtn" class="w-full py-3.5 bg-[#1a1f2c] text-[#475569] font-semibold text-[16px] rounded-[24px] cursor-not-allowed transition-all">
           Review
         </button>
       </div>
       
     </div>
-
 
   </div>
 
