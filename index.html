@@ -235,34 +235,30 @@
         </button>
       </div>
 
-      <!-- KEYPAD (Spacious row gaps gap-y-7 and taller touch targets h-13) -->
-      <div class="grid grid-cols-3 gap-x-6 gap-y-7 px-8 pb-6 shrink-0">
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('1')">1</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('2')">2</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('3')">3</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('4')">4</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('5')">5</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('6')">6</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('7')">7</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('8')">8</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('9')">9</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('.')">.</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressKey('0')">0</button>
-        <button type="button" class="keypad-btn text-[28px] font-medium text-white h-13 flex items-center justify-center active:opacity-50 transition-opacity" onclick="pressBackspace()">
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H19a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
+     <!-- KEYPAD (Glued above Review Button with expanded spacing) -->
+      <div class="grid grid-cols-3 gap-x-6 gap-y-6 px-6 pb-6 shrink-0">
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('1')">1</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('2')">2</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('3')">3</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('4')">4</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('5')">5</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('6')">6</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('7')">7</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('8')">8</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('9')">9</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('.')">.</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressKey('0')">0</button>
+        <button type="button" class="keypad-btn text-[24px] font-semibold text-white h-12 flex items-center justify-center active:bg-white/10 rounded-lg transition-colors" onclick="pressBackspace()">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414A2 2 0 0110.828 5H19a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
         </button>
       </div>
 
-      <!-- REVIEW BUTTON (Lifts keypad unit above bottom browser overlay) -->
+      <!-- REVIEW BUTTON (pb-20 provides ~80px height to clear the floating browser bar) -->
       <div class="px-4 pb-20 w-full shrink-0">
         <button type="button" id="nextBtn" class="w-full py-3.5 bg-[#1a1f2c] text-[#475569] font-semibold text-[16px] rounded-[24px] cursor-not-allowed transition-all">
           Review
         </button>
       </div>
-      
-    </div>
-
-      
       
     </div>
 
